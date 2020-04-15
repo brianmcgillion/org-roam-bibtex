@@ -289,15 +289,15 @@ Otherwise, behave as if called interactively."
   :require 'org-roam-bibtex
   :global t
   (cond (org-roam-bibtex-mode
-         (setq org-ref-notes-function 'org-roam-bibtex-notes-fn)
+         (setq org-ref-notes-function 'org-roam-bibtex-notes-fns)
          (setq bibtex-completion-find-note-file-fn
-               #'org-roam-bibtex-find-note-file)
+               (list #'org-roam-bibtex-find-note-file))
          (advice-add 'bibtex-completion-edit-notes
                      :override #'org-roam-bibtex-edit-notes-ad))
         (t
          (setq org-ref-notes-function 'org-ref-notes-function-one-file)
-         (setq bibtex-completion-find-note-file-fn
-               #'bibtex-completion-find-note-file)
+         (setq bibtex-completion-find-note-file-fns
+               (list #'bibtex-completion-find-note-file))
          (advice-remove 'bibtex-completion-edit-notes
                         #'org-roam-bibtex-edit-notes-ad))))
 
